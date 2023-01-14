@@ -3,9 +3,14 @@ import { useTranslation } from 'react-i18next';
 
 const Remove = ({ onHide, handler, item }) => {
   const { t } = useTranslation();
-  const handleRemove = () => {
-    handler(item);
-    onHide();
+  const handleRemove = async () => {
+    try {
+      await handler({ id: item });
+      onHide();
+    } catch (e) {
+      console.error(e.message);
+      throw e;
+    }
   };
   return (
     <Modal show centered>

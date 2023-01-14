@@ -24,8 +24,6 @@ const channelsSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchChannels.pending, () => {
-      })
       .addCase(fetchChannels.rejected, () => {
         console.log('error');
       })

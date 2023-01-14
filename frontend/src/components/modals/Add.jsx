@@ -24,9 +24,16 @@ const Add = ({ onHide, handler, names }) => {
         .notOneOf(names, t('validators.unique'))
         .required(t('validators.required')),
     }),
-    onSubmit: ({ name }) => {
-      handler(name);
-      onHide();
+    onSubmit: async ({ name }) => {
+      try {
+        await handler({ name });
+        onHide();
+      } catch (e) {
+        console.error(e.message);
+        throw e;
+      } finally {
+        formik.setSubmitting(false);
+      }
     },
   });
 
@@ -37,38 +44,37 @@ const Add = ({ onHide, handler, names }) => {
       </Modal.Header>
       <Modal.Body>
         <Form onSubmit={formik.handleSubmit}>
-          <FormGroup>
-            <FormControl
-              ref={inputRef}
-              id="name"
-              className="mb-2"
-              onChange={formik.handleChange}
-              name="name"
-              value={formik.values.name}
-              isInvalid={formik.touched.name && formik.errors.name}
-              disabled={formik.isSubmitting}
-            />
-            <Form.Label visuallyHidden htmlFor="name">{t('channels.name')}</Form.Label>
-            <Form.Control.Feedback type="invalid">{formik.errors.name}</Form.Control.Feedback>
-          </FormGroup>
-          <div className="d-flex justify-content-end">
-            <Button
-              disabled={formik.isSubmitting}
-              type="button"
-              variant="secondary"
-              className="me-2"
-              onClick={onHide}
-            >
-              {t('elements.cancel')}
-            </Button>
-            <Button
-              disabled={formik.isSubmitting}
-              type="submit"
-              variant="primary"
-            >
-              {t('elements.send')}
-            </Button>
-          </div>
+          <fieldset disabled={formik.isSubmitting}>
+            <FormGroup>
+              <FormControl
+                ref={inputRef}
+                id="name"
+                className="mb-2"
+                onChange={formik.handleChange}
+                name="name"
+                value={formik.values.name}
+                isInvalid={formik.touched.name && formik.errors.name}
+              />
+              <Form.Label visuallyHidden htmlFor="name">{t('channels.name')}</Form.Label>
+              <Form.Control.Feedback type="invalid">{formik.errors.name}</Form.Control.Feedback>
+            </FormGroup>
+            <div className="d-flex justify-content-end">
+              <Button
+                type="button"
+                variant="secondary"
+                className="me-2"
+                onClick={onHide}
+              >
+                {t('elements.cancel')}
+              </Button>
+              <Button
+                type="submit"
+                variant="primary"
+              >
+                {t('elements.send')}
+              </Button>
+            </div>
+          </fieldset>
         </Form>
       </Modal.Body>
     </Modal>

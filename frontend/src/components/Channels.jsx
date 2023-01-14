@@ -28,14 +28,15 @@ const ChannelsList = ({ channels }) => {
   const channelsContext = useChannelsContext();
 
   const {
-    channelHandlers, activeChannelId, setActiveChannelId, messageHandlers,
+    socketHandlers, activeChannelId, setActiveChannelId,
   } = channelsContext;
 
   const activeChannel = channels.find(({ id }) => id === activeChannelId);
   const handlers = {
-    adding: channelHandlers.addChannel,
-    removing: channelHandlers.removeChannel,
-    renaming: channelHandlers.renameChannel,
+    adding: socketHandlers.addChannel,
+    removing: socketHandlers.removeChannel,
+    renaming: socketHandlers.renameChannel,
+    newMessage: socketHandlers.addMessage,
   };
 
   const [modalInfo, setModalInfo] = useState({ type: null, handler: null, item: null });
@@ -110,7 +111,7 @@ const ChannelsList = ({ channels }) => {
               {renderChannels()}
             </Nav>
           </div>
-          {activeChannel && <ChatField channel={activeChannel} handlers={messageHandlers} />}
+          {activeChannel && <ChatField channel={activeChannel} handler={handlers.newMessage} />}
         </div>
       </div>
       {renderModal({ modalInfo, hideModal, channelNames })}

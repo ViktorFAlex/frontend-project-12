@@ -8,6 +8,7 @@ import { actions as messagesActions } from '../slices/messagesSlice';
 import ChannelContext from '../contexts/index';
 
 const socket = io();
+const socketTimeout = 4000;
 
 const ChannelProvider = ({ children }) => {
   const { t } = useTranslation();
@@ -37,22 +38,31 @@ const ChannelProvider = ({ children }) => {
     });
   });
 
-  const removeChannel = (id) => socket.emit('removeChannel', ({ id }), () => {
-    setActiveChannelId(defaultChannelId);
-  });
-  const renameChannel = ({ name, id }) => socket.emit('renameChannel', ({ id, name }));
-  const addChannel = (name) => {
-    socket.emit('newChannel', ({ name }), ({ data }) => {
-      setActiveChannelId(data.id);
+  const socketPromise = (action, cb) => (data) => new Promise((resolve, reject) => {
+    socket.timeout(socketTimeout).emit(action, data, (error, response) => {
+      if (error) {
+        reject(new Error('network Error'));
+      } else {
+        if (cb) {
+          cb(response);
+        }
+        resolve(response);
+      }
     });
-  };
-  const addMessage = (message, channelId, author) => socket.emit('newMessage', ({ message, channelId, author }));
+  });
+
+  const socketHandlers = useMemo(() => ({
+    addMessage: socketPromise('newMessage'),
+    addChannel: socketPromise('newChannel', ({ data }) => setActiveChannelId(data.id)),
+    removeChannel: socketPromise('removeChannel', () => setActiveChannelId(defaultChannelId)),
+    renameChannel: socketPromise('renameChannel'),
+  }), []);
+
   const handlers = useMemo(() => ({
-    channelHandlers: { removeChannel, renameChannel, addChannel },
-    messageHandlers: { addMessage },
+    socketHandlers,
     activeChannelId,
     setActiveChannelId,
-  }), [activeChannelId]);
+  }), [activeChannelId, socketHandlers]);
   return (
     <ChannelContext.Provider value={handlers}>
       {children}

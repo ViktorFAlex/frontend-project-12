@@ -7,14 +7,12 @@ import filter from '../assets/profanityFilter';
 import { selectors } from '../slices/messagesSlice';
 import img from '../assets/arrow-right-square.svg';
 
-const ChatField = ({ channel, handlers }) => {
+const ChatField = ({ channel, handler }) => {
   const { t } = useTranslation();
   const scrollRef = useRef();
   const inputRef = useRef();
   useEffect(() => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollIntoView();
-    }
+    scrollRef.current?.scrollIntoView();
     inputRef.current.focus();
   });
   const { id: channelId, name } = channel;
@@ -23,16 +21,21 @@ const ChatField = ({ channel, handlers }) => {
   const currentUserId = localStorage.getItem('userId');
   const currentUser = JSON.parse(currentUserId);
   const { username: currentUserName } = currentUser;
-
   const formik = useFormik({
     initialValues: {
       body: '',
     },
-    onSubmit: ({ body }) => {
-      handlers.addMessage(body, channelId, currentUserName);
-      formik.values.body = '';
-      formik.setSubmitting(false);
-      inputRef.current.focus();
+    onSubmit: async ({ body }) => {
+      try {
+        await handler({ message: body, channelId, author: currentUserName });
+        formik.values.body = '';
+        inputRef.current.focus();
+      } catch (e) {
+        console.error(e.message);
+        throw e;
+      } finally {
+        formik.setSubmitting(false);
+      }
     },
   });
 
@@ -63,22 +66,23 @@ const ChatField = ({ channel, handlers }) => {
   const renderMessageArea = () => (
     <div className="mt-auto px-5 py-3">
       <Form noValidate className="py-1 border rounded-2" onSubmit={formik.handleSubmit}>
-        <InputGroup hasValidation>
-          <Form.Control
-            name="body"
-            ref={inputRef}
-            aria-label={t('messages.newMessage')}
-            placeholder={t('messages.printMessage')}
-            className="border-0 p-0 ps-2"
-            value={formik.values.body}
-            onChange={formik.handleChange}
-            disabled={formik.isSubmitting}
-          />
-          <Button type="submit" variant="" className="button-group-vertical" disabled={formik.isSubmitting}>
-            <img alt={t('elements.send')} src={img} />
-            <span className="visually-hidden">Отправить</span>
-          </Button>
-        </InputGroup>
+        <fieldset disabled={formik.isSubmitting}>
+          <InputGroup hasValidation>
+            <Form.Control
+              name="body"
+              ref={inputRef}
+              aria-label={t('messages.newMessage')}
+              placeholder={t('messages.printMessage')}
+              className="border-0 p-0 ps-2"
+              value={formik.values.body}
+              onChange={formik.handleChange}
+            />
+            <Button type="submit" variant="" className="button-group-vertical">
+              <img alt={t('elements.send')} src={img} />
+              <span className="visually-hidden">Отправить</span>
+            </Button>
+          </InputGroup>
+        </fieldset>
       </Form>
     </div>
   );
