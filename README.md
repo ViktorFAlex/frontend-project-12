@@ -2,6 +2,22 @@
 [![Actions Status](https://github.com/ViktorFAlex/frontend-project-12/workflows/hexlet-check/badge.svg)](https://github.com/ViktorFAlex/frontend-project-12/actions)
 ### Deployment link:
 [Railway](https://frontend-project-12-production-5b59.up.railway.app/)
+## Hexlet Chat.
+Simplified version of online-messenger where you can communicate with your friends!
+This repo contains frontend-part of this project.
+
+You can find backend-documentation here: 
+[link](https://github.com/hexlet-components/project-js-chat-backend)
+
+#### To make project run in developing environment:
+1) Setup:
+```bash
+make install
+```
+2) Start:
+```bash
+make start
+```
 
 #### 💻 Tech Stack:  
 ![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=flat-square&logo=css3&logoColor=white) ![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=flat-square&logo=html5&logoColor=white) ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=flat-square&logo=javascript&logoColor=%23F7DF1E) ![Markdown](https://img.shields.io/badge/markdown-%23000000.svg?style=flat-square&logo=markdown&logoColor=white)
