@@ -6,7 +6,6 @@ import {
 } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
-import * as Yup from 'yup';
 import notifiers from '../toasts/index';
 import useAuthContext from '../hooks/useCustomContext.jsx';
 import PageTemplate from './PageTemplate';
@@ -26,12 +25,6 @@ const LoginPage = () => {
       username: '',
       password: '',
     },
-    validationSchema: Yup.object().shape({
-      username: Yup.string()
-        .required(t('validators.required')),
-      password: Yup.string()
-        .required(t('validators.required')),
-    }),
     onSubmit: async (values) => {
       setAuthFailed(false);
       try {

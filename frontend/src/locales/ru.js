@@ -3,7 +3,7 @@ export default {
     validators: {
       required: 'Обязательное поле',
       name: 'от 3 до 20 символов',
-      password: 'Минимум 6 символов',
+      password: 'Не менее 6 символов',
       confirmPassword: 'Пароли должны совпадать',
       userExists: 'Такой пользователь уже существует',
       incorrectInputs: 'Неверные имя пользователя или пароль',
