@@ -1,11 +1,11 @@
-import { io } from 'socket.io-client';
 import { useMemo, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import notifiers from '../toasts/index';
+import { useDispatch } from 'react-redux';
+import { io } from 'socket.io-client';
+import ChannelContext from '../contexts/index';
 import { actions as channelsActions } from '../slices/channelsSlice';
 import { actions as messagesActions } from '../slices/messagesSlice';
-import ChannelContext from '../contexts/index';
+import notifiers from '../toasts/index';
 
 const socket = io();
 const socketTimeout = 4000;

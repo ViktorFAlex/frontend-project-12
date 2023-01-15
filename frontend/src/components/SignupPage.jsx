@@ -1,17 +1,17 @@
 import axios from 'axios';
-import React, { useRef, useEffect } from 'react';
 import { useFormik } from 'formik';
+import React, { useRef, useEffect } from 'react';
 import {
   Card, Form, Button, FloatingLabel,
 } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
-import notifiers from '../toasts/index';
-import useAuthContext from '../hooks/useCustomContext.jsx';
 import PageTemplate from './PageTemplate';
-import avatar from '../assets/signup.jpg';
-import routes from '../routes.js';
+import img from '../assets/signup.jpg';
+import useAuthContext from '../hooks/useCustomContext';
+import routes from '../routes';
+import notifiers from '../toasts/index';
 
 const SignupPage = () => {
   const auth = useAuthContext();
@@ -49,7 +49,6 @@ const SignupPage = () => {
         if (err.isAxiosError && err.response.status === 409) {
           formik.errors.form = t('validators.userExists');
           notifiers.userExists(t);
-          userNameInput.current.select();
           return;
         }
         throw err;
@@ -58,8 +57,8 @@ const SignupPage = () => {
   });
 
   useEffect(() => {
-    userNameInput.current.focus();
-  }, []);
+    userNameInput.current.select();
+  }, [formik.isSubmitting]);
 
   return (
     <PageTemplate>
@@ -67,7 +66,7 @@ const SignupPage = () => {
         <Card.Body className="d-flex flex-column flex-md-row justify-content-around align-items-center p-5">
           <div>
             <img
-              src={avatar}
+              src={img}
               className="rounded-circle"
               alt={t('elements.signup')}
             />

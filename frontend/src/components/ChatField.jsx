@@ -1,11 +1,11 @@
 import { useEffect, useRef } from 'react';
-import { useSelector } from 'react-redux';
+import { useFormik } from 'formik';
 import { Form, InputGroup, Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-import { useFormik } from 'formik';
+import { useSelector } from 'react-redux';
+import img from '../assets/arrow-right-square.svg';
 import filter from '../assets/profanityFilter';
 import { selectors } from '../slices/messagesSlice';
-import img from '../assets/arrow-right-square.svg';
 
 const ChatField = ({ channel, handler }) => {
   const { t } = useTranslation();
@@ -29,7 +29,6 @@ const ChatField = ({ channel, handler }) => {
       try {
         await handler({ message: body, channelId, author: currentUserName });
         formik.values.body = '';
-        inputRef.current.focus();
       } catch (e) {
         console.error(e.message);
         throw e;

@@ -1,11 +1,11 @@
 import { useTranslation } from 'react-i18next';
-import image from '../assets/notfound.svg';
+import img from '../assets/notfound.svg';
 
 const WrongPage = () => {
   const { t } = useTranslation();
   return (
     <div className="text-center">
-      <img alt={t('elements.notFound')} className="img-fluid h-25" src={image} />
+      <img alt={t('elements.notFound')} className="img-fluid h-25" src={img} />
       <h1 className="h4 text-muted">{t('elements.notFound')}</h1>
       <p className="text-muted">
         {t('elements.youCanNavigate')}

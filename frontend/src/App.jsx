@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react';
 import { Navbar, Button } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 import {
   BrowserRouter as Router,
   Routes,
@@ -8,14 +9,13 @@ import {
   Navigate,
   useLocation,
 } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
-import notifiers from './toasts/index';
-import AuthContext from './contexts/index.jsx';
 import LoginPage from './components/LoginPage.jsx';
 import WrongPage from './components/WrongPage.jsx';
 import MainPage from './components/MainPage.jsx';
 import SignupPage from './components/SignupPage.jsx';
+import AuthContext from './contexts/index.jsx';
 import useAuthContext from './hooks/useCustomContext.jsx';
+import notifiers from './toasts/index';
 
 const AuthProvider = ({ children }) => {
   const [loggedIn, setLoggedIn] = useState(localStorage.getItem('userId') && true);

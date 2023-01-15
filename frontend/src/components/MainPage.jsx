@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchChannels, selectors as channelsSelectors } from '../slices/channelsSlice';
-import Channels from './Channels';
 import ChannelProvider from './ChannelProvider';
+import Channels from './Channels';
+import { fetchChannels, selectors as channelsSelectors } from '../slices/channelsSlice';
 
 const getAuthHeader = () => {
   const userId = JSON.parse(localStorage.getItem('userId'));

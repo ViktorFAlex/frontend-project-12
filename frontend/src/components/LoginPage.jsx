@@ -1,16 +1,16 @@
 import axios from 'axios';
-import React, { useRef, useEffect, useState } from 'react';
 import { useFormik } from 'formik';
+import React, { useRef, useEffect, useState } from 'react';
 import {
   Card, Form, Button, FloatingLabel,
 } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
-import notifiers from '../toasts/index';
-import useAuthContext from '../hooks/useCustomContext.jsx';
 import PageTemplate from './PageTemplate';
-import avatar from '../assets/login.jpg';
-import routes from '../routes.js';
+import img from '../assets/login.jpg';
+import useAuthContext from '../hooks/useCustomContext';
+import routes from '../routes';
+import notifiers from '../toasts/index';
 
 const LoginPage = () => {
   const auth = useAuthContext();
@@ -47,9 +47,7 @@ const LoginPage = () => {
   });
 
   useEffect(() => {
-    if (!formik.isSubmitting) {
-      userNameInput.current.select();
-    }
+    userNameInput.current.select();
   }, [formik.isSubmitting]);
   return (
     <PageTemplate>
@@ -57,7 +55,7 @@ const LoginPage = () => {
         <Card.Body className="row p-5">
           <div className="col-12 col-md-6 d-flex align-items-center justify-content-center">
             <img
-              src={avatar}
+              src={img}
               className="rounded-circle"
               alt={t('elements.toLogin')}
             />

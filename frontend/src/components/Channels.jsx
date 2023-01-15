@@ -1,17 +1,17 @@
+import cn from 'classnames';
+import { useState } from 'react';
 import {
   Nav,
   Button,
   ButtonGroup,
   Dropdown,
 } from 'react-bootstrap';
-import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import cn from 'classnames';
-import useChannelsContext from '../hooks/useCustomContext';
-import svg from '../assets/plus-square.svg';
 import ChatField from './ChatField';
-import getModal from './modals/index.js';
+import getModal from './modals/index';
+import img from '../assets/plus-square.svg';
 import filter from '../assets/profanityFilter';
+import useChannelsContext from '../hooks/useCustomContext';
 
 const renderModal = ({ modalInfo, hideModal, channelNames }) => {
   const { type, handler, item } = modalInfo;
@@ -47,7 +47,7 @@ const ChannelsList = ({ channels }) => {
     <div className="d-flex justify-content-between mb-2 ps-4 pe-2">
       <span>Каналы </span>
       <button type="button" className="text-primary btn btn-group-vertical p-0" onClick={() => showModal('adding')}>
-        <img src={svg} alt={t('elements.add')} />
+        <img src={img} alt={t('elements.add')} />
         <span className="visually-hidden">+</span>
       </button>
     </div>
