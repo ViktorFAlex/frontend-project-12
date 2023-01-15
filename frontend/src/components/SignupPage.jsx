@@ -83,7 +83,7 @@ const SignupPage = () => {
                 name="username"
                 autoComplete="username"
                 required
-                placeholder={t('validators.username')}
+                placeholder={t('elements.username')}
                 value={formik.values.username}
                 ref={userNameInput}
                 onChange={formik.handleChange}
