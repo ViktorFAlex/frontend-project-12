@@ -76,6 +76,7 @@ const SignupPage = () => {
             <h1 className="text-center mb-4">Регистрация</h1>
             <FloatingLabel
               label={t('elements.username')}
+              controlId="username"
               className="mb-3"
             >
               <Form.Control
@@ -83,7 +84,7 @@ const SignupPage = () => {
                 name="username"
                 autoComplete="username"
                 required
-                placeholder={t('elements.username')}
+                placeholder={t('validators.name')}
                 value={formik.values.username}
                 ref={userNameInput}
                 onChange={formik.handleChange}
@@ -104,6 +105,7 @@ const SignupPage = () => {
             </FloatingLabel>
             <FloatingLabel
               label={t('elements.password')}
+              controlId="password"
               className="mb-3"
             >
               <Form.Control
@@ -111,8 +113,8 @@ const SignupPage = () => {
                 name="password"
                 autoComplete="new-password"
                 required
-                aria-describedby="passwordHelp"
-                placeholder={t('elements.password')}
+                aria-describedby="passwordHelpBlock"
+                placeholder={t('validators.password')}
                 type="password"
                 value={formik.values.password}
                 onChange={formik.handleChange}
@@ -133,14 +135,14 @@ const SignupPage = () => {
             <FloatingLabel
               label={t('elements.confirmPassword')}
               className="mb-4"
+              controlId="confirmPassword"
             >
               <Form.Control
                 id="confirmPassword"
                 name="confirmPassword"
                 autoComplete="new-password"
                 required
-                aria-describedby="passwordHelp"
-                placeholder={t('elements.confirmPassword')}
+                placeholder={t('validators.confirmPassword')}
                 type="password"
                 value={formik.values.confirmPassword}
                 onChange={formik.handleChange}
