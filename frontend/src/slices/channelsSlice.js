@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { createSlice, createAsyncThunk, createEntityAdapter } from '@reduxjs/toolkit';
-import routes from '../routes';
+import routes from '../utils/routes';
 
 export const fetchChannels = createAsyncThunk(
   'channels/fetchChannels',
@@ -25,7 +25,7 @@ const channelsSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchChannels.rejected, () => {
-        console.log('error');
+        throw new Error('network Error');
       })
       .addCase(fetchChannels.fulfilled, (state, { payload }) => {
         const { channels } = payload;

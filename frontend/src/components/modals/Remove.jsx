@@ -1,11 +1,12 @@
 import { Modal, Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
+import handlers from '../../utils/socket';
 
-const Remove = ({ onHide, handler, item }) => {
+const Remove = ({ item, onHide }) => {
   const { t } = useTranslation();
   const handleRemove = async () => {
     try {
-      await handler({ id: item });
+      await handlers.removeChannel({ id: item });
       onHide();
     } catch (e) {
       console.error(e.message);

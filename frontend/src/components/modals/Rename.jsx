@@ -5,10 +5,9 @@ import {
 } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
+import handlers from '../../utils/socket';
 
-const Rename = ({
-  onHide, handler, item, names,
-}) => {
+const Rename = ({ onHide, item, names }) => {
   const inputRef = useRef();
   const { t } = useTranslation();
   const { name: prevName, id } = item;
@@ -19,14 +18,14 @@ const Rename = ({
     validateOnChange: false,
     validationSchema: Yup.object().shape({
       name: Yup.string()
-        .min(3, t('validators.name'))
-        .max(20, t('validators.name'))
-        .notOneOf(names, t('validators.unique'))
-        .required(t('validators.required')),
+        .min(3, 'validators.name')
+        .max(20, 'validators.name')
+        .notOneOf(names, 'validators.unique')
+        .required('validators.required'),
     }),
     onSubmit: async ({ name }) => {
       try {
-        await handler({ id, name });
+        await handlers.renameChannel({ id, name });
         onHide();
       } catch (e) {
         console.error(e.message);
@@ -60,7 +59,7 @@ const Rename = ({
                 isInvalid={formik.touched.name && formik.errors.name}
               />
               <Form.Label visuallyHidden htmlFor="name">{t('channels.name')}</Form.Label>
-              <Form.Control.Feedback type="invalid">{formik.errors.name}</Form.Control.Feedback>
+              <Form.Control.Feedback type="invalid">{t(formik.errors.name)}</Form.Control.Feedback>
             </FormGroup>
             <div className="d-flex justify-content-end">
               <Button

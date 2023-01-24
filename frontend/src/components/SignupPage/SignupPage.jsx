@@ -7,11 +7,11 @@ import {
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
-import PageTemplate from './PageTemplate';
-import img from '../assets/signup.jpg';
-import useAuthContext from '../hooks/useCustomContext';
-import routes from '../routes';
-import notifiers from '../toasts/index';
+import PageTemplate from '../common-components/PageTemplate';
+import img from '../../assets/signup.jpg';
+import useAuthContext from '../../hooks/useCustomContext';
+import routes from '../../utils/routes';
+import notifiers from '../../toasts/index';
 
 const SignupPage = () => {
   const auth = useAuthContext();
@@ -27,21 +27,21 @@ const SignupPage = () => {
     },
     validationSchema: Yup.object().shape({
       username: Yup.string()
-        .min(3, t('validators.name'))
-        .max(20, t('validators.name'))
-        .required(t('validators.required')),
+        .min(3, 'validators.name')
+        .max(20, 'validators.name')
+        .required('validators.required'),
       password: Yup.string()
-        .min(6, t('validators.password'))
-        .required(t('validators.required')),
+        .min(6, 'validators.password')
+        .required('validators.required'),
       confirmPassword: Yup.string()
-        .oneOf([Yup.ref('password')], t('validators.confirmPassword'))
-        .required(t('validators.confirmPassword')),
+        .oneOf([Yup.ref('password')], 'validators.confirmPassword')
+        .required('validators.confirmPassword'),
     }),
     onSubmit: async (values) => {
       try {
         const res = await axios.post(routes.signupPath(), values);
         localStorage.setItem('userId', JSON.stringify(res.data));
-        auth.logIn();
+        auth.logIn(res.data.username);
         const { from } = location.state || { from: { pathname: '/' } };
         navigate(from);
         notifiers.signedUp(t);
@@ -80,7 +80,6 @@ const SignupPage = () => {
                 className="mb-3"
               >
                 <Form.Control
-                  id="username"
                   name="username"
                   autoComplete="username"
                   required
@@ -100,7 +99,7 @@ const SignupPage = () => {
                   type="invalid"
                   tooltip={!!formik.errors.username || !!formik.errors.form}
                 >
-                  {formik.errors.username}
+                  {t(formik.errors.username)}
                 </Form.Control.Feedback>
               </FloatingLabel>
               <FloatingLabel
@@ -109,7 +108,6 @@ const SignupPage = () => {
                 className="mb-3"
               >
                 <Form.Control
-                  id="password"
                   name="password"
                   autoComplete="new-password"
                   required
@@ -129,7 +127,7 @@ const SignupPage = () => {
                   type="invalid"
                   tooltip={!!formik.errors.password || !!formik.errors.form}
                 >
-                  {formik.errors.password}
+                  {t(formik.errors.password)}
                 </Form.Control.Feedback>
               </FloatingLabel>
               <FloatingLabel
@@ -138,7 +136,6 @@ const SignupPage = () => {
                 controlId="confirmPassword"
               >
                 <Form.Control
-                  id="confirmPassword"
                   name="confirmPassword"
                   autoComplete="new-password"
                   required
@@ -158,7 +155,7 @@ const SignupPage = () => {
                   type="invalid"
                   tooltip={!!formik.errors.confirmPassword || !!formik.errors.form}
                 >
-                  {formik.errors.confirmPassword || formik.errors.form}
+                  {t(formik.errors.confirmPassword) || t(formik.errors.form)}
                 </Form.Control.Feedback>
               </FloatingLabel>
               <Button variant="outline-primary" type="submit" className="w-100">{t('elements.toSignup')}</Button>

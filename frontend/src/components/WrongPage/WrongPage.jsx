@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import img from '../assets/notfound.svg';
+import img from '../../assets/notfound.svg';
 
 const WrongPage = () => {
   const { t } = useTranslation();

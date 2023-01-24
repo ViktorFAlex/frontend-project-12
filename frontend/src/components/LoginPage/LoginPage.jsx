@@ -6,11 +6,11 @@ import {
 } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
-import PageTemplate from './PageTemplate';
-import img from '../assets/login.jpg';
-import useAuthContext from '../hooks/useCustomContext';
-import routes from '../routes';
-import notifiers from '../toasts/index';
+import PageTemplate from '../common-components/PageTemplate';
+import img from '../../assets/login.jpg';
+import useAuthContext from '../../hooks/useCustomContext';
+import routes from '../../utils/routes';
+import notifiers from '../../toasts/index';
 
 const LoginPage = () => {
   const auth = useAuthContext();
@@ -30,7 +30,7 @@ const LoginPage = () => {
       try {
         const res = await axios.post(routes.loginPath(), values);
         localStorage.setItem('userId', JSON.stringify(res.data));
-        auth.logIn();
+        auth.logIn(res.data.username);
         const { from } = location.state || { from: { pathname: '/' } };
         navigate(from);
       } catch (err) {
@@ -70,7 +70,6 @@ const LoginPage = () => {
               >
                 <Form.Control
                   ref={userNameInput}
-                  id="username"
                   name="username"
                   autoComplete="username"
                   required
@@ -86,7 +85,6 @@ const LoginPage = () => {
                 className="mb-4"
               >
                 <Form.Control
-                  id="password"
                   name="password"
                   autoComplete="current-password"
                   required

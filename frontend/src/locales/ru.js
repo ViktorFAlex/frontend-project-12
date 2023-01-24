@@ -28,6 +28,9 @@ export default {
       cancel: 'Отменить',
       send: 'Отправить',
       sure: 'Уверены?',
+      channels: 'Каналы',
+      plus: '+',
+      hash: '#',
     },
     messages: {
       newMessage: 'Новое сообщение',
