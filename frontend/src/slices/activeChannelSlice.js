@@ -8,24 +8,22 @@ const activeChannelSlice = createSlice({
   name: 'activeChannel',
   initialState,
   reducers: {
-    setActiveChannel: (state, action) => {
-      state.activeChannelId = action.payload;
-    },
-    setByActiveUser: (state, { payload }) => {
-      state.byActiveUser = payload;
-    },
+    setActiveChannel: (state, action) => ({ ...state, activeChannelId: action.payload }),
+    setByActiveUser: (state, { payload }) => ({ ...state, byActiveUser: payload }),
   },
   extraReducers: (builder) => {
     builder
       .addCase(channelsActions.removeChannel, (state, { payload }) => {
         if (state.activeChannelId === payload) {
-          state.activeChannelId = defaultChannelId;
+          return { ...state, activeChannelId: defaultChannelId };
         }
+        return state;
       })
       .addCase(channelsActions.addChannel, (state, { payload }) => {
         if (state.byActiveUser) {
-          state.activeChannelId = payload.id;
+          return { ...state, activeChannelId: payload.id };
         }
+        return state;
       });
   },
 });
