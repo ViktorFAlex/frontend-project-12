@@ -25,7 +25,7 @@ const Rename = ({ onHide, item, names }) => {
     }),
     onSubmit: async ({ name }) => {
       try {
-        await handlers.renameChannel({ id, name });
+        await handlers.renameChannel({ id, name }, t);
         onHide();
       } catch (e) {
         console.error(e.message);
