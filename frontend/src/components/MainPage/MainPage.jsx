@@ -16,21 +16,17 @@ const getAuthHeader = () => {
 
 const MainPage = () => {
   const { t } = useTranslation();
-  const auth = useAuthContext();
   const dispatch = useDispatch();
+  const auth = useAuthContext();
   useEffect(() => {
-    const authenticate = async () => {
-      try {
-        const header = getAuthHeader();
-        await dispatch(fetchChannels(header));
-      } catch (e) {
-        console.error('error', e);
-        notifiers.networkError(t);
+    const header = getAuthHeader();
+    dispatch(fetchChannels(header))
+      .catch((e) => {
+        console.error(e);
         auth.logOut();
-      }
-    };
-    authenticate();
-  }, [auth, dispatch, t]);
+        notifiers.networkError(t);
+      });
+  }, [dispatch, auth, t]);
   const channels = useSelector(channelsSelectors.selectAll);
   return (
     !!channels.length

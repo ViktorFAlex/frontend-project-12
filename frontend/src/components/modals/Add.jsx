@@ -27,7 +27,7 @@ const Add = ({ onHide, names }) => {
     }),
     onSubmit: async ({ name }) => {
       try {
-        await handlers.addChannel({ name });
+        await handlers.addChannel({ name }, t);
         onHide();
       } catch (e) {
         console.error(e.message);

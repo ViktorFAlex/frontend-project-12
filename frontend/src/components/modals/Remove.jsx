@@ -6,7 +6,7 @@ const Remove = ({ item, onHide }) => {
   const { t } = useTranslation();
   const handleRemove = async () => {
     try {
-      await handlers.removeChannel({ id: item });
+      await handlers.removeChannel({ id: item }, t);
       onHide();
     } catch (e) {
       console.error(e.message);
