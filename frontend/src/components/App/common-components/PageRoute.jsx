@@ -1,10 +1,11 @@
 import { useLocation, Navigate } from 'react-router-dom';
 import useCustomContext from '../../../hooks/useCustomContext.jsx';
-import appRoutes from '../../../utils/appRoutes.js';
+import routes from '../../../utils/appRoutes.js';
 
 const PageRoute = ({ children, route }) => {
   const { loginHandlers } = useCustomContext();
   const location = useLocation();
+  const { appRoutes } = routes;
 
   switch (route) {
     case (appRoutes.main):
