@@ -10,11 +10,11 @@ import * as Yup from 'yup';
 import PageTemplate from '../common-components/PageTemplate';
 import img from '../../assets/signup.jpg';
 import useCustomContext from '../../hooks/useCustomContext';
-import apiRoutes from '../../utils/apiRoutes';
-import appRoutes from '../../utils/appRoutes';
+import routes from '../../routes/routes';
 import notifiers from '../../toasts/index';
 
 const SignupPage = () => {
+  const { apiRoutes, appRoutes } = routes;
   const { loginHandlers } = useCustomContext();
   const { t } = useTranslation();
 

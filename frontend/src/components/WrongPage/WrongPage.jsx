@@ -1,8 +1,9 @@
 import { useTranslation } from 'react-i18next';
 import img from '../../assets/notfound.svg';
-import appRoutes from '../../utils/appRoutes';
+import routes from '../../routes/routes';
 
 const WrongPage = () => {
+  const { appRoutes } = routes;
   const { t } = useTranslation();
 
   return (
