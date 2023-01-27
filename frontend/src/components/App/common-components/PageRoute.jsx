@@ -1,15 +1,21 @@
 import { useLocation, Navigate } from 'react-router-dom';
-import useAuthContext from '../../../hooks/useCustomContext.jsx';
+import useCustomContext from '../../../hooks/useCustomContext.jsx';
+import appRoutes from '../../../utils/appRoutes.js';
 
 const PageRoute = ({ children, route }) => {
-  const auth = useAuthContext();
+  const { loginHandlers } = useCustomContext();
   const location = useLocation();
+
   switch (route) {
-    case ('main'):
-      return (auth.loggedIn.isLogged ? children : <Navigate to="/login" state={{ from: location }} />);
-    case ('login'):
-    case ('signup'):
-      return (auth.loggedIn.isLogged ? <Navigate to="/" state={{ from: location }} /> : children);
+    case (appRoutes.main):
+      return (loginHandlers.loginStatus.isLogged
+        ? children
+        : <Navigate to={appRoutes.login} state={{ from: location }} />);
+    case (appRoutes.login):
+    case (appRoutes.signup):
+      return (loginHandlers.loginStatus.isLogged
+        ? <Navigate to={appRoutes.main} state={{ from: location }} />
+        : children);
     default:
       throw new Error(`Unexpected route: ${route}`);
   }

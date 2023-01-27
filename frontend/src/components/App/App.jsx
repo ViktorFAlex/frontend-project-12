@@ -9,49 +9,50 @@ import LoginPage from '../LoginPage/LoginPage';
 import WrongPage from '../WrongPage/WrongPage.jsx';
 import MainPage from '../MainPage/MainPage.jsx';
 import SignupPage from '../SignupPage/SignupPage.jsx';
-import AuthProvider from './common-components/AuthProvider';
+import AppProvider from './common-components/AppProvider';
 import PageRoute from './common-components/PageRoute';
 import AuthButton from './common-components/AuthButton';
+import appRoutes from '../../utils/appRoutes';
 
-const App = () => (
+const App = ({ socketHandlers }) => (
   <div className="d-flex flex-column h-100">
-    <AuthProvider>
+    <AppProvider socketHandlers={socketHandlers}>
       <Router>
         <Navbar bg="white" expand="lg" className="shadow-sm">
           <div className="container">
-            <Navbar.Brand as={Link} to="/">Hexlet Chat</Navbar.Brand>
+            <Navbar.Brand as={Link} to={appRoutes.main}>Hexlet Chat</Navbar.Brand>
             <AuthButton />
           </div>
         </Navbar>
         <Routes>
           <Route
-            path="/"
+            path={appRoutes.main}
             element={(
-              <PageRoute route="main">
+              <PageRoute route={appRoutes.main}>
                 <MainPage />
               </PageRoute>
                 )}
           />
           <Route
-            path="/signup"
+            path={appRoutes.signup}
             element={(
-              <PageRoute route="signup">
+              <PageRoute route={appRoutes.signup}>
                 <SignupPage />
               </PageRoute>
             )}
           />
           <Route
-            path="/login"
+            path={appRoutes.login}
             element={(
-              <PageRoute route="login">
+              <PageRoute route={appRoutes.login}>
                 <LoginPage />
               </PageRoute>
                 )}
           />
-          <Route path="*" element={<WrongPage />} />
+          <Route path={appRoutes.default} element={<WrongPage />} />
         </Routes>
       </Router>
-    </AuthProvider>
+    </AppProvider>
   </div>
 );
 export default App;

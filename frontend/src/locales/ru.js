@@ -1,14 +1,5 @@
 export default {
   translation: {
-    validators: {
-      required: 'Обязательное поле',
-      name: 'от 3 до 20 символов',
-      password: 'Не менее 6 символов',
-      confirmPassword: 'Пароли должны совпадать',
-      userExists: 'Такой пользователь уже существует',
-      incorrectInputs: 'Неверные имя пользователя или пароль',
-      unique: 'Должно быть уникальным',
-    },
     elements: {
       signup: 'Регистрация',
       username: 'Имя пользователя',
@@ -18,6 +9,7 @@ export default {
       toSignup: 'Зарегистрироваться',
       signedUp: 'Уже зарегистрированы?',
       toLogin: 'Войти',
+      toLogout: 'Выйти',
       notFound: 'Страница не найдена',
       youCanNavigate: 'Но вы можете перейти',
       toMainPage: 'на главную страницу',
@@ -47,12 +39,23 @@ export default {
       name: 'Имя канала',
     },
     toast: {
-      loggedOut: 'Вы разлогинились!',
-      signedUp: 'Вы успешно зарегистрировались!',
-      networkError: 'Ошибка соединения',
+      logOut: 'Вы разлогинились!',
+      loggedIn: 'Вы успешно авторизовались!',
       add: 'Канал создан',
       rename: 'Канал переименован',
       remove: 'Канал удалён',
+    },
+    errors: {
+      required: 'Обязательное поле',
+      name: 'от 3 до 20 символов',
+      password: 'Не менее 6 символов',
+      confirmPassword: 'Пароли должны совпадать',
+      incorrectInputs: 'Неверные имя пользователя или пароль',
+      unique: 'Должно быть уникальным',
+      networkError: 'Ошибка соединения',
+      Unauthorized: 'Ошибка авторизации',
+      SomethingWrong: 'Что-то пошло не так...',
+      Conflict: 'Такой пользователь уже существует',
     },
   },
 };

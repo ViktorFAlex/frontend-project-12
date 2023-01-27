@@ -2,32 +2,34 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import Channels from './components/Channels/Channels';
-import { fetchChannels, selectors as channelsSelectors } from '../../slices/channelsSlice';
-import useAuthContext from '../../hooks/useCustomContext.jsx';
+import { fetchChannels } from '../../slices/channelsSlice';
+import selectors from '../../slices/selectors';
+import useCustomContext from '../../hooks/useCustomContext.jsx';
 import notifiers from '../../toasts/index';
 
-const getAuthHeader = () => {
-  const userId = JSON.parse(localStorage.getItem('userId'));
-  if (userId && userId.token) {
-    return { Authorization: `Bearer ${userId.token}` };
-  }
-  return {};
-};
+const getAuthHeaders = (token) => (token ? { Authorization: `Bearer ${token}` } : {});
 
 const MainPage = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const auth = useAuthContext();
+  const { loginHandlers } = useCustomContext();
+
   useEffect(() => {
-    const header = getAuthHeader();
-    dispatch(fetchChannels(header))
-      .catch((e) => {
-        console.error(e);
-        auth.logOut();
-        notifiers.networkError(t);
+    const { token } = loginHandlers.loginStatus;
+    const headers = getAuthHeaders(token);
+
+    dispatch(fetchChannels(headers))
+      .catch((error) => {
+        const { message } = error;
+        if (message === 'Unauthorized') {
+          loginHandlers.logOut();
+        }
+        notifiers.error(t, message);
       });
-  }, [dispatch, auth, t]);
-  const channels = useSelector(channelsSelectors.selectAll);
+  }, [dispatch, loginHandlers, t]);
+
+  const channels = useSelector(selectors.selectChannels);
+
   return (
     !!channels.length
 && <Channels />

@@ -9,16 +9,20 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import PageTemplate from '../common-components/PageTemplate';
 import img from '../../assets/signup.jpg';
-import useAuthContext from '../../hooks/useCustomContext';
-import routes from '../../utils/routes';
+import useCustomContext from '../../hooks/useCustomContext';
+import apiRoutes from '../../utils/apiRoutes';
+import appRoutes from '../../utils/appRoutes';
 import notifiers from '../../toasts/index';
 
 const SignupPage = () => {
-  const auth = useAuthContext();
+  const { loginHandlers } = useCustomContext();
+  const { t } = useTranslation();
+
   const location = useLocation();
   const navigate = useNavigate();
-  const { t } = useTranslation();
+
   const userNameInput = useRef();
+
   const formik = useFormik({
     initialValues: {
       username: '',
@@ -27,31 +31,33 @@ const SignupPage = () => {
     },
     validationSchema: Yup.object().shape({
       username: Yup.string()
-        .min(3, 'validators.name')
-        .max(20, 'validators.name')
-        .required('validators.required'),
+        .min(3, 'errors.name')
+        .max(20, 'errors.name')
+        .required('errors.required'),
       password: Yup.string()
-        .min(6, 'validators.password')
-        .required('validators.required'),
+        .min(6, 'errors.password')
+        .required('errors.required'),
       confirmPassword: Yup.string()
-        .oneOf([Yup.ref('password')], 'validators.confirmPassword')
-        .required('validators.confirmPassword'),
+        .oneOf([Yup.ref('password')], 'errors.confirmPassword')
+        .required('errors.confirmPassword'),
     }),
     onSubmit: async (values) => {
       try {
-        const res = await axios.post(routes.signupPath(), values);
-        localStorage.setItem('userId', JSON.stringify(res.data));
-        auth.logIn(res.data.username);
-        const { from } = location.state || { from: { pathname: '/' } };
+        const res = await axios.post(apiRoutes.signupPath(), values);
+        loginHandlers.logIn(res.data);
+
+        const { from } = location.state || { from: { pathname: appRoutes.main } };
         navigate(from);
-        notifiers.signedUp(t);
-      } catch (err) {
-        if (err.isAxiosError && err.response.status === 409) {
-          formik.errors.form = t('validators.userExists');
-          notifiers.userExists(t);
-          return;
+
+        notifiers.loggedIn(t);
+      } catch (error) {
+        if (error.isAxiosError && error?.response?.status === 409) {
+          const { response: { statusText } } = error;
+          formik.errors.form = statusText;
+          notifiers.error(t, statusText);
+        } else {
+          notifiers.error(t, 'networkError');
         }
-        throw err;
       }
     },
   });
@@ -83,7 +89,7 @@ const SignupPage = () => {
                   name="username"
                   autoComplete="username"
                   required
-                  placeholder={t('validators.name')}
+                  placeholder={t('errors.name')}
                   value={formik.values.username}
                   ref={userNameInput}
                   onChange={formik.handleChange}
@@ -112,7 +118,7 @@ const SignupPage = () => {
                   autoComplete="new-password"
                   required
                   aria-describedby="passwordHelpBlock"
-                  placeholder={t('validators.password')}
+                  placeholder={t('errors.password')}
                   type="password"
                   value={formik.values.password}
                   onChange={formik.handleChange}
@@ -139,7 +145,7 @@ const SignupPage = () => {
                   name="confirmPassword"
                   autoComplete="new-password"
                   required
-                  placeholder={t('validators.confirmPassword')}
+                  placeholder={t('errors.confirmPassword')}
                   type="password"
                   value={formik.values.confirmPassword}
                   onChange={formik.handleChange}
@@ -155,7 +161,7 @@ const SignupPage = () => {
                   type="invalid"
                   tooltip={!!formik.errors.confirmPassword || !!formik.errors.form}
                 >
-                  {t(formik.errors.confirmPassword) || t(formik.errors.form)}
+                  {t(formik.errors.confirmPassword) || t(`errors.${formik.errors.form}`)}
                 </Form.Control.Feedback>
               </FloatingLabel>
               <Button variant="outline-primary" type="submit" className="w-100">{t('elements.toSignup')}</Button>
@@ -167,7 +173,7 @@ const SignupPage = () => {
             {' '}
             <span>{t('elements.signedUp')}</span>
             {' '}
-            <a href="/login">{t('elements.toLogin')}</a>
+            <a href={appRoutes.main}>{t('elements.toLogin')}</a>
           </div>
         </Card.Footer>
       </Card>

@@ -1,49 +1,58 @@
 import { useRef, useEffect } from 'react';
 import { Button, Form, InputGroup } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
+import filter from '../../../../../../../assets/profanityFilter';
 import img from '../../../../../../../assets/arrow-right-square.svg';
-import handlers from '../../../../../../../utils/socket';
+import notifiers from '../../../../../../../toasts/index';
+import selectors from '../../../../../../../slices/selectors';
+import useCustomContext from '../../../../../../../hooks/useCustomContext';
 
-const MessageArea = ({ id, author }) => {
+const MessageArea = () => {
+  const { t } = useTranslation();
+  const { loginHandlers, socketHandlers } = useCustomContext();
+  const author = loginHandlers.loginStatus.user;
   const inputRef = useRef(null);
   useEffect(() => {
     inputRef.current.focus();
   });
-  const { t } = useTranslation();
+
+  const id = useSelector(selectors.selectActiveChannelId);
+
   const formik = useFormik({
     initialValues: {
-      body: '',
+      message: '',
     },
     validationSchema: Yup.object().shape({
-      body: Yup.string()
+      message: Yup.string()
         .required(),
     }),
-    onSubmit: async ({ body }) => {
+    onSubmit: async ({ message }) => {
       try {
-        await handlers.addMessage({ message: body, channelId: id, author });
-        formik.values.body = '';
+        await socketHandlers.addMessage({ message: filter.clean(message), channelId: id, author });
+        formik.values.message = '';
       } catch (e) {
-        console.error(e.message);
-        throw e;
+        notifiers.error(t, 'networkError');
       } finally {
         formik.setSubmitting(false);
       }
     },
   });
+
   return (
     <div className="mt-auto px-5 py-3">
       <Form noValidate className="py-1 border rounded-2" onSubmit={formik.handleSubmit}>
         <fieldset disabled={formik.isSubmitting}>
           <InputGroup hasValidation>
             <Form.Control
-              name="body"
+              name="message"
               ref={inputRef}
               aria-label={t('messages.newMessage')}
               placeholder={t('messages.printMessage')}
               className="border-0 p-0 ps-2"
-              value={formik.values.body}
+              value={formik.values.message}
               onChange={formik.handleChange}
             />
             <Button type="submit" variant="" className="button-group-vertical">

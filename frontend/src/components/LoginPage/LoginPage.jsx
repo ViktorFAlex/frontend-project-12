@@ -8,12 +8,13 @@ import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
 import PageTemplate from '../common-components/PageTemplate';
 import img from '../../assets/login.jpg';
-import useAuthContext from '../../hooks/useCustomContext';
-import routes from '../../utils/routes';
+import useCustomContext from '../../hooks/useCustomContext';
+import apiRoutes from '../../utils/apiRoutes';
+import appRoutes from '../../utils/appRoutes';
 import notifiers from '../../toasts/index';
 
 const LoginPage = () => {
-  const auth = useAuthContext();
+  const { loginHandlers } = useCustomContext();
   const userNameInput = useRef(null);
   const { t } = useTranslation();
 
@@ -28,17 +29,19 @@ const LoginPage = () => {
     onSubmit: async (values) => {
       setAuthFailed(false);
       try {
-        const res = await axios.post(routes.loginPath(), values);
-        localStorage.setItem('userId', JSON.stringify(res.data));
-        auth.logIn(res.data.username);
-        const { from } = location.state || { from: { pathname: '/' } };
+        const res = await axios.post(apiRoutes.loginPath(), values);
+        loginHandlers.logIn(res.data);
+
+        const { from } = location.state || { from: { pathname: appRoutes.main } };
         navigate(from);
-      } catch (err) {
-        if (err.message === 'Network Error') {
-          notifiers.networkError(t);
-        }
-        if (err.isAxiosError && err.response.status === 401) {
+
+        notifiers.loggedIn(t);
+      } catch (error) {
+        if (error.isAxiosError && error?.response?.status === 401) {
           setAuthFailed(true);
+          notifiers.error(t, error.response.statusText);
+        } else {
+          notifiers.error(t, 'networkError');
         }
       } finally {
         formik.setSubmitting(false);
@@ -98,7 +101,7 @@ const LoginPage = () => {
                   type="invalid"
                   tooltip={authFailed}
                 >
-                  {t('validators.incorrectInputs')}
+                  {t('errors.incorrectInputs')}
                 </Form.Control.Feedback>
               </FloatingLabel>
               <Button
@@ -116,7 +119,7 @@ const LoginPage = () => {
             {' '}
             <span>{t('elements.noAccount')}</span>
             {' '}
-            <a href="/signup">{t('elements.signup')}</a>
+            <a href={appRoutes.signup}>{t('elements.signup')}</a>
           </div>
         </Card.Footer>
       </Card>

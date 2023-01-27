@@ -12,19 +12,47 @@ code {
     monospace;
 }
 
-.loader {
-  animation: spin 1.5s linear infinite;
-  margin: auto;
-}
 .divLoader {
   width: 100vw;
   height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: rgb(186, 195, 195);
+  display: block;
+  background: linear-gradient(90deg, rgba(114,119,130,1) 0%, rgba(150,161,158,1) 50%, rgba(245,244,245,1) 100%);
 }
+
+.loader {
+  width: 40vw;
+  height: 70vh;
+  display: block;
+  animation: spin 1.5s linear infinite;
+  margin: auto;
+}
+
+.loader-bar{
+  display: block;
+  position: relative;
+  margin: auto;
+  height: 12px;
+  width: 80%;
+  border: 1px solid #fff;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.loader-bar:after{
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 0;
+  background: #ffffff;
+  animation: 3s prog ease-in infinite;
+}
+
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+@keyframes prog {
+  to  { width: 100%;}
 }

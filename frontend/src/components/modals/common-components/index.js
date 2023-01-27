@@ -3,9 +3,9 @@ import Remove from './Remove';
 import Rename from './Rename';
 
 const modals = {
-  adding: Add,
-  removing: Remove,
-  renaming: Rename,
+  add: Add,
+  remove: Remove,
+  rename: Rename,
 };
 
 export default (modalName) => modals[modalName];

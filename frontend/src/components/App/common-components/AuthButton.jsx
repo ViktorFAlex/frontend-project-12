@@ -1,18 +1,20 @@
 import { Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-import useAuthContext from '../../../hooks/useCustomContext';
+import useCustomContext from '../../../hooks/useCustomContext';
 import notifiers from '../../../toasts/index';
 
 const AuthButton = () => {
   const { t } = useTranslation();
-  const auth = useAuthContext();
+  const { loginHandlers } = useCustomContext();
+
   const handleClick = () => {
-    notifiers.loggedOut(t);
-    auth.logOut();
+    notifiers.logOut(t);
+    loginHandlers.logOut();
   };
+
   return (
-    auth.loggedIn
-      ? <Button onClick={handleClick}>Выйти</Button>
+    loginHandlers.loginStatus.isLogged
+      ? <Button onClick={handleClick}>{t('elements.toLogout')}</Button>
       : null
   );
 };

@@ -1,8 +1,10 @@
 import { useTranslation } from 'react-i18next';
 import img from '../../assets/notfound.svg';
+import appRoutes from '../../utils/appRoutes';
 
 const WrongPage = () => {
   const { t } = useTranslation();
+
   return (
     <div className="text-center">
       <img alt={t('elements.notFound')} className="img-fluid h-25" src={img} />
@@ -10,7 +12,7 @@ const WrongPage = () => {
       <p className="text-muted">
         {t('elements.youCanNavigate')}
         {' '}
-        <a href="/">{t('elements.toMainPage')}</a>
+        <a href={appRoutes.main}>{t('elements.toMainPage')}</a>
       </p>
     </div>
   );
