@@ -23,6 +23,7 @@ export default {
       channels: 'Каналы',
       plus: '+',
       hash: '#',
+      hexlet: 'Hexlet Chat',
     },
     messages: {
       newMessage: 'Новое сообщение',

@@ -1,22 +1,20 @@
 import { Modal, Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import selectors from '../../../slices/selectors';
-import { actions as modalsActions } from '../../../slices/modalsSlice';
-import useCustomContext from '../../../hooks/useCustomContext';
+import useChatApiContext from '../../../hooks/useChatApiContext';
+import useModalContext from '../../../hooks/useModalContext';
 
 const Remove = () => {
   const { t } = useTranslation();
-  const dispatch = useDispatch();
-  const { socketHandlers } = useCustomContext();
+  const chatApi = useChatApiContext();
 
   const { modalItem } = useSelector(selectors.selectModalInfo);
-
-  const handleHide = () => dispatch(modalsActions.hideModal());
+  const { handleHide } = useModalContext();
 
   const handleRemove = async () => {
     try {
-      await socketHandlers.removeChannel({ id: modalItem }, t);
+      await chatApi.removeChannel({ id: modalItem }, t);
       handleHide();
     } catch (e) {
       console.error(e.message);

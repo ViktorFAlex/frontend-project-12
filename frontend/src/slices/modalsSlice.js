@@ -7,7 +7,6 @@ const modalsSlice = createSlice({
   initialState,
   reducers: {
     showModal: (_, { payload }) => ({ modalType: payload.type, modalItem: payload?.item ?? null }),
-    hideModal: () => ({ modalType: null, modalItem: null }),
   },
 });
 

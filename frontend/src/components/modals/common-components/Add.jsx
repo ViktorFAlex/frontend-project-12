@@ -3,20 +3,19 @@ import { useRef, useEffect } from 'react';
 import {
   Modal, FormGroup, FormControl, Button, Form,
 } from 'react-bootstrap';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 import selectors from '../../../slices/selectors';
-import { actions as modalsActions } from '../../../slices/modalsSlice';
-import useCustomContext from '../../../hooks/useCustomContext';
+import useChatApiContext from '../../../hooks/useChatApiContext';
+import useModalContext from '../../../hooks/useModalContext';
 import filter from '../../../assets/profanityFilter';
 
 const Add = () => {
   const { t } = useTranslation();
-  const dispatch = useDispatch();
-  const { socketHandlers } = useCustomContext();
+  const chatApi = useChatApiContext();
+  const { handleHide } = useModalContext();
 
-  const handleHide = () => dispatch(modalsActions.hideModal());
   const inputRef = useRef();
   useEffect(() => {
     inputRef.current.focus();
@@ -38,7 +37,7 @@ const Add = () => {
     onSubmit: async ({ name }) => {
       try {
         const cleanName = filter.clean(name); // can send two equal dirty words;
-        await socketHandlers.addChannel({ name: cleanName }, t);
+        await chatApi.addChannel({ name: cleanName }, t);
         handleHide();
       } catch (e) {
         console.error(e.message);

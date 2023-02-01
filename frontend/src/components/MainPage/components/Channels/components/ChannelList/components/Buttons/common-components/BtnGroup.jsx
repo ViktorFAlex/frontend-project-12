@@ -4,13 +4,18 @@ import { useTranslation } from 'react-i18next';
 import DefaultButton from './DefaultButton';
 import selectors from '../../../../../../../../../slices/selectors';
 import { actions as modalsActions } from '../../../../../../../../../slices/modalsSlice';
+import useModalContext from '../../../../../../../../../hooks/useModalContext';
 
 const BtnGroup = ({ channel }) => {
   const { id } = channel;
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const { handleShow } = useModalContext();
 
-  const handleShow = (type, item) => () => dispatch(modalsActions.showModal({ type, item }));
+  const handleClick = (type, item) => () => {
+    handleShow();
+    dispatch(modalsActions.showModal({ type, item }));
+  };
 
   const activeChannelId = useSelector(selectors.selectActiveChannelId);
   const btnVariant = id === activeChannelId ? 'secondary' : '';
@@ -23,12 +28,12 @@ const BtnGroup = ({ channel }) => {
       </Dropdown.Toggle>
       <Dropdown.Menu>
         <Dropdown.Item
-          onClick={handleShow('remove', id)}
+          onClick={handleClick('remove', id)}
         >
           {t('elements.remove')}
         </Dropdown.Item>
         <Dropdown.Item
-          onClick={handleShow('rename', channel)}
+          onClick={handleClick('rename', channel)}
         >
           {t('elements.rename')}
         </Dropdown.Item>

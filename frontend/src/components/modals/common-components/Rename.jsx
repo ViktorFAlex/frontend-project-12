@@ -3,22 +3,20 @@ import { useRef, useEffect } from 'react';
 import {
   Modal, FormGroup, FormControl, Button, Form,
 } from 'react-bootstrap';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 import selectors from '../../../slices/selectors';
-import { actions as modalsActions } from '../../../slices/modalsSlice';
-import useCustomContext from '../../../hooks/useCustomContext';
+import useChatApiContext from '../../../hooks/useChatApiContext';
 import filter from '../../../assets/profanityFilter';
+import useModalContext from '../../../hooks/useModalContext';
 
 const Rename = () => {
   const { t } = useTranslation();
-  const dispatch = useDispatch();
-  const { socketHandlers } = useCustomContext();
+  const chatApi = useChatApiContext();
+  const { handleHide } = useModalContext();
 
   const inputRef = useRef(null);
-
-  const handleHide = () => dispatch(modalsActions.hideModal());
 
   const { modalItem } = useSelector(selectors.selectModalInfo);
   const { name: prevName, id } = modalItem;
@@ -40,7 +38,7 @@ const Rename = () => {
     onSubmit: async ({ name }) => {
       try {
         const cleanName = filter.clean(name); // can send two equal dirty words;
-        await socketHandlers.renameChannel({ id, name: cleanName }, t);
+        await chatApi.renameChannel({ id, name: cleanName }, t);
         handleHide();
       } catch (e) {
         console.error(e.message);
@@ -50,7 +48,6 @@ const Rename = () => {
       }
     },
   });
-  console.log(formik);
   useEffect(() => {
     inputRef.current.select();
   }, [formik.isSubmitting]);

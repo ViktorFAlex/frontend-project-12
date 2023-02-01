@@ -8,12 +8,14 @@ import filter from '../../../../../../../assets/profanityFilter';
 import img from '../../../../../../../assets/arrow-right-square.svg';
 import notifiers from '../../../../../../../toasts/index';
 import selectors from '../../../../../../../slices/selectors';
-import useCustomContext from '../../../../../../../hooks/useCustomContext';
+import useAuthContext from '../../../../../../../hooks/useAuthContext';
+import useChatApiContext from '../../../../../../../hooks/useChatApiContext';
 
 const MessageArea = () => {
   const { t } = useTranslation();
-  const { loginHandlers, socketHandlers } = useCustomContext();
-  const author = loginHandlers.loginStatus.user;
+  const auth = useAuthContext();
+  const chatApi = useChatApiContext();
+  const author = auth.loginStatus.user;
   const inputRef = useRef(null);
   useEffect(() => {
     inputRef.current.focus();
@@ -31,7 +33,7 @@ const MessageArea = () => {
     }),
     onSubmit: async ({ message }) => {
       try {
-        await socketHandlers.addMessage({ message: filter.clean(message), channelId: id, author });
+        await chatApi.addMessage({ message: filter.clean(message), channelId: id, author });
         formik.values.message = '';
       } catch (e) {
         notifiers.error(t, 'networkError');

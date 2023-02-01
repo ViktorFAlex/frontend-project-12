@@ -8,12 +8,12 @@ import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
 import PageTemplate from '../common-components/PageTemplate';
 import img from '../../assets/login.jpg';
-import useCustomContext from '../../hooks/useCustomContext';
+import useAuthContext from '../../hooks/useAuthContext';
 import routes from '../../routes/routes';
 import notifiers from '../../toasts/index';
 
 const LoginPage = () => {
-  const { loginHandlers } = useCustomContext();
+  const auth = useAuthContext();
   const userNameInput = useRef(null);
   const { t } = useTranslation();
   const { apiRoutes, appRoutes } = routes;
@@ -30,7 +30,7 @@ const LoginPage = () => {
       setAuthFailed(false);
       try {
         const res = await axios.post(apiRoutes.loginPath(), values);
-        loginHandlers.logIn(res.data);
+        auth.logIn(res.data);
 
         const { from } = location.state || { from: { pathname: appRoutes.main } };
         navigate(from);

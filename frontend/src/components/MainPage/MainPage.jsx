@@ -4,29 +4,26 @@ import { useTranslation } from 'react-i18next';
 import Channels from './components/Channels/Channels';
 import { fetchChannels } from '../../slices/channelsSlice';
 import selectors from '../../slices/selectors';
-import useCustomContext from '../../hooks/useCustomContext.jsx';
+import useAuthContext from '../../hooks/useAuthContext.jsx';
 import notifiers from '../../toasts/index';
-
-const getAuthHeaders = (token) => (token ? { Authorization: `Bearer ${token}` } : {});
 
 const MainPage = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const { loginHandlers } = useCustomContext();
+  const auth = useAuthContext();
 
   useEffect(() => {
-    const { token } = loginHandlers.loginStatus;
-    const headers = getAuthHeaders(token);
+    const headers = auth.getAuthHeaders();
 
     dispatch(fetchChannels(headers))
       .catch((error) => {
         const { message } = error;
         if (message === 'Unauthorized') {
-          loginHandlers.logOut();
+          auth.logOut();
         }
         notifiers.error(t, message);
       });
-  }, [dispatch, loginHandlers, t]);
+  }, [dispatch, auth, t]);
 
   const channels = useSelector(selectors.selectChannels);
 

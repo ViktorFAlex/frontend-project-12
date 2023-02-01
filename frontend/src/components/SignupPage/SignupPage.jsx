@@ -9,13 +9,13 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import PageTemplate from '../common-components/PageTemplate';
 import img from '../../assets/signup.jpg';
-import useCustomContext from '../../hooks/useCustomContext';
+import useAuthContext from '../../hooks/useAuthContext';
 import routes from '../../routes/routes';
 import notifiers from '../../toasts/index';
 
 const SignupPage = () => {
   const { apiRoutes, appRoutes } = routes;
-  const { loginHandlers } = useCustomContext();
+  const auth = useAuthContext();
   const { t } = useTranslation();
 
   const location = useLocation();
@@ -44,7 +44,7 @@ const SignupPage = () => {
     onSubmit: async (values) => {
       try {
         const res = await axios.post(apiRoutes.signupPath(), values);
-        loginHandlers.logIn(res.data);
+        auth.logIn(res.data);
 
         const { from } = location.state || { from: { pathname: appRoutes.main } };
         navigate(from);
