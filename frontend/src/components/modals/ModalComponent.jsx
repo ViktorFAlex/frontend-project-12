@@ -1,9 +1,9 @@
 import { Modal } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import getModal from './common-components/index';
+import getModal from './components/index';
 import selectors from '../../slices/selectors';
-import useModalContext from '../../hooks/useModalContext';
+import { useModalContext } from '../../hooks/index';
 
 const ModalComponent = () => {
   const { t } = useTranslation();

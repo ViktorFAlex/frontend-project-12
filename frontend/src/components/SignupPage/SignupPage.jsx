@@ -9,7 +9,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import PageTemplate from '../common-components/PageTemplate';
 import img from '../../assets/signup.jpg';
-import useAuthContext from '../../hooks/useAuthContext';
+import { useAuthContext } from '../../hooks/index';
 import routes from '../../routes/index';
 import notifiers from '../../toasts/index';
 

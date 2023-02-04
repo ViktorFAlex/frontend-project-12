@@ -2,9 +2,9 @@ import { Dropdown, ButtonGroup } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import DefaultButton from './DefaultButton';
-import selectors from '../../../../../../../../../slices/selectors';
-import { actions as modalsActions } from '../../../../../../../../../slices/modalsSlice';
-import useModalContext from '../../../../../../../../../hooks/useModalContext';
+import selectors from '../../../../slices/selectors';
+import { actions as modalsActions } from '../../../../slices/modalsSlice';
+import { useModalContext } from '../../../../hooks/index';
 
 const BtnGroup = ({ channel }) => {
   const { id } = channel;

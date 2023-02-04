@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
 import PageTemplate from '../common-components/PageTemplate';
 import img from '../../assets/login.jpg';
-import useAuthContext from '../../hooks/useAuthContext';
+import { useAuthContext } from '../../hooks/index';
 import routes from '../../routes/index';
 import notifiers from '../../toasts/index';
 

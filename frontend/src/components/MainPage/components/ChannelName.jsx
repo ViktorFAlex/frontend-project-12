@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import selectors from '../../../../../../../slices/selectors';
+import selectors from '../../../slices/selectors';
 
 const ChannelName = () => {
   const { t } = useTranslation();

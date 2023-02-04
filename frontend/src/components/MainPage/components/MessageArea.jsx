@@ -4,12 +4,11 @@ import { useSelector } from 'react-redux';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
-import filter from '../../../../../../../assets/profanityFilter';
-import img from '../../../../../../../assets/arrow-right-square.svg';
-import notifiers from '../../../../../../../toasts/index';
-import selectors from '../../../../../../../slices/selectors';
-import useAuthContext from '../../../../../../../hooks/useAuthContext';
-import useChatApiContext from '../../../../../../../hooks/useChatApiContext';
+import filter from '../../../assets/profanityFilter';
+import img from '../../../assets/arrow-right-square.svg';
+import notifiers from '../../../toasts/index';
+import selectors from '../../../slices/selectors';
+import { useChatApiContext, useAuthContext } from '../../../hooks/index';
 
 const MessageArea = () => {
   const { t } = useTranslation();

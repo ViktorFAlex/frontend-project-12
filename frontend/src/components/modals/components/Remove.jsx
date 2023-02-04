@@ -2,8 +2,7 @@ import { Modal, Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import selectors from '../../../slices/selectors';
-import useChatApiContext from '../../../hooks/useChatApiContext';
-import useModalContext from '../../../hooks/useModalContext';
+import { useChatApiContext, useModalContext } from '../../../hooks/index';
 
 const Remove = () => {
   const { t } = useTranslation();

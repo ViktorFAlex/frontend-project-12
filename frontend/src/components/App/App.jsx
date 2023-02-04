@@ -7,8 +7,8 @@ import LoginPage from '../LoginPage/LoginPage';
 import WrongPage from '../WrongPage/WrongPage.jsx';
 import MainPage from '../MainPage/MainPage.jsx';
 import SignupPage from '../SignupPage/SignupPage.jsx';
-import PageRoute from './common-components/PageRoute';
-import NavBar from './common-components/NavBar';
+import PageRoute from './components/PageRoute';
+import NavBar from './components/NavBar';
 import routes from '../../routes/index';
 
 const App = () => (

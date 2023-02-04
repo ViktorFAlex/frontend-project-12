@@ -1,8 +1,8 @@
-import ChatField from './components/ChatField/ChatField';
-import ChannelList from './components/ChannelList/ChannelList';
-import Header from './components/common-components/Header';
-import ModalLayout from '../../../modals/ModalLayout';
-import ModalProvider from './components/common-components/ModalProvider';
+import ChatField from './ChatField';
+import ChannelList from './ChannelList';
+import Header from './common-components/Header';
+import ModalLayout from '../../modals/ModalLayout';
+import ModalProvider from '../../Providers/ModalProvider';
 
 const Channels = () => (
   <ModalProvider>

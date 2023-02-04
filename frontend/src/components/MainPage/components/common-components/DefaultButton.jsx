@@ -2,9 +2,9 @@ import cn from 'classnames';
 import { Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { actions as channelsActions } from '../../../../../../../../../slices/channelsSlice';
-import filter from '../../../../../../../../../assets/profanityFilter';
-import selectors from '../../../../../../../../../slices/selectors';
+import { actions as channelsActions } from '../../../../slices/channelsSlice';
+import filter from '../../../../assets/profanityFilter';
+import selectors from '../../../../slices/selectors';
 
 const DefaultButton = ({ channel }) => {
   const { id, name, removable } = channel;

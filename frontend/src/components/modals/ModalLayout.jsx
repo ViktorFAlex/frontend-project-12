@@ -1,6 +1,6 @@
 import { Modal } from 'react-bootstrap';
 import ModalComponent from './ModalComponent';
-import useModalContext from '../../hooks/useModalContext';
+import { useModalContext } from '../../hooks/index';
 
 const ModalLayout = () => {
   const { show } = useModalContext();

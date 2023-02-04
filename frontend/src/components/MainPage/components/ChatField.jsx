@@ -1,6 +1,6 @@
-import ChannelName from './components/ChannelName';
-import ChannelMessages from './components/ChannelMessages';
-import MessageArea from './components/MessageArea';
+import ChannelName from './ChannelName';
+import ChannelMessages from './ChannelMessages';
+import MessageArea from './MessageArea';
 
 const ChatField = () => (
   <div className="col p-0 h-100">

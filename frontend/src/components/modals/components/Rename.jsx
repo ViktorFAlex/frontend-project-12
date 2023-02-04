@@ -7,9 +7,8 @@ import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 import selectors from '../../../slices/selectors';
-import useChatApiContext from '../../../hooks/useChatApiContext';
+import { useChatApiContext, useModalContext } from '../../../hooks/index';
 import filter from '../../../assets/profanityFilter';
-import useModalContext from '../../../hooks/useModalContext';
 
 const Rename = () => {
   const { t } = useTranslation();

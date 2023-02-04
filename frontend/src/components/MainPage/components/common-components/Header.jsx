@@ -1,8 +1,8 @@
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import img from '../../../../../../assets/plus-square.svg';
-import { actions as modalsActions } from '../../../../../../slices/modalsSlice';
-import useModalContext from '../../../../../../hooks/useModalContext';
+import img from '../../../../assets/plus-square.svg';
+import { actions as modalsActions } from '../../../../slices/modalsSlice';
+import { useModalContext } from '../../../../hooks/index';
 
 const Header = () => {
   const dispatch = useDispatch();

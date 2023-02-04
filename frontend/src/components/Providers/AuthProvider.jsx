@@ -1,5 +1,5 @@
 import { useState, useMemo, useCallback } from 'react';
-import AuthContext from '../../../contexts/authContext';
+import { AuthContext } from '../../contexts/index';
 
 const AppProvider = ({ children }) => {
   const parsedInfo = JSON.parse(localStorage.getItem('userId')) || { username: null, token: null };

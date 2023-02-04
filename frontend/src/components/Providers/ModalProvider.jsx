@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import ModalContext from '../../../../../../contexts/modalContext';
+import { ModalContext } from '../../contexts/index';
 
 const ModalProvider = ({ children }) => {
   const [show, setShow] = useState(false);

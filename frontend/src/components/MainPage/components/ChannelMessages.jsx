@@ -1,6 +1,6 @@
 import { useRef, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import selectors from '../../../../../../../slices/selectors';
+import selectors from '../../../slices/selectors';
 
 const ChannelMessages = () => {
   const scrollRef = useRef(null);

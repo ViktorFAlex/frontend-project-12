@@ -1,5 +1,5 @@
-import BtnGroup from './common-components/BtnGroup';
-import DefaultButton from './common-components/DefaultButton';
+import BtnGroup from './BtnGroup';
+import DefaultButton from './DefaultButton';
 
 const Buttons = ({ channel }) => {
   const { removable } = channel;

@@ -7,8 +7,7 @@ import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 import selectors from '../../../slices/selectors';
-import useChatApiContext from '../../../hooks/useChatApiContext';
-import useModalContext from '../../../hooks/useModalContext';
+import { useChatApiContext, useModalContext } from '../../../hooks/index';
 import filter from '../../../assets/profanityFilter';
 
 const Add = () => {

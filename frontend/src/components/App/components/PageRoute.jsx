@@ -1,5 +1,5 @@
 import { useLocation, Navigate, Outlet } from 'react-router-dom';
-import useAuthContext from '../../../hooks/useAuthContext';
+import { useAuthContext } from '../../../hooks/index';
 import routes from '../../../routes/index.js';
 
 const PageRoute = () => {

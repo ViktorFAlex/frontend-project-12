@@ -1,4 +1,4 @@
-import ChatApiContext from '../../../contexts/chatApiContext';
+import { ChatApiContext } from '../../contexts/index';
 
 const ChatApiProvider = ({ children, chatApi }) => (
   <ChatApiContext.Provider value={chatApi}>

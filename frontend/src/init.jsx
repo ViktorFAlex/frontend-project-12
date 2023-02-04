@@ -9,8 +9,8 @@ import resources from './locales/index.js';
 import store from './slices/index.js';
 import Preloader from './components/common-components/Preloader';
 import buildChatApi from './chatApi/buildChatApi.js';
-import AuthProvider from './components/App/common-components/AuthProvider.jsx';
-import ChatApiProvider from './components/App/common-components/ChatApiProvider.jsx';
+import AuthProvider from './components/Providers/AuthProvider.jsx';
+import ChatApiProvider from './components/Providers/ChatApiProvider.jsx';
 
 const App = lazy(() => import('./components/App/App'));
 
