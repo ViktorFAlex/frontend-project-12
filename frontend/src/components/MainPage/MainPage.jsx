@@ -11,7 +11,7 @@ const MainPage = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const auth = useAuthContext();
-  console.log('hey');
+
   useEffect(() => {
     const headers = auth.getAuthHeaders();
 
@@ -20,8 +20,10 @@ const MainPage = () => {
         const { message } = error;
         if (message === 'Unauthorized') {
           auth.logOut();
+          notifiers.error(t, 'Unauthorized');
+          return;
         }
-        notifiers.error(t, message);
+        notifiers.error(t, 'SomethingWrong');
       });
   }, [dispatch, auth, t]);
 

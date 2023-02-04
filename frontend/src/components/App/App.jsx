@@ -18,28 +18,12 @@ const App = () => (
       <Routes>
         <Route
           path={routes.app.mainRoute()}
-          element={(
-            <PageRoute route={routes.app.mainRoute()}>
-              <MainPage />
-            </PageRoute>
-                )}
-        />
-        <Route
-          path={routes.app.signupRoute()}
-          element={(
-            <PageRoute route={routes.app.signupRoute()}>
-              <SignupPage />
-            </PageRoute>
-            )}
-        />
-        <Route
-          path={routes.app.loginRoute()}
-          element={(
-            <PageRoute route={routes.app.loginRoute()}>
-              <LoginPage />
-            </PageRoute>
-                )}
-        />
+          element={<PageRoute />}
+        >
+          <Route index element={<MainPage />} />
+          <Route path={routes.app.loginRoute()} element={<LoginPage />} />
+          <Route path={routes.app.signupRoute()} element={<SignupPage />} />
+        </Route>
         <Route path={routes.app.defaultRoute()} element={<WrongPage />} />
       </Routes>
     </Router>
