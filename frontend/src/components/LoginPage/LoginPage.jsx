@@ -9,14 +9,13 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import PageTemplate from '../common-components/PageTemplate';
 import img from '../../assets/login.jpg';
 import useAuthContext from '../../hooks/useAuthContext';
-import routes from '../../routes/routes';
+import routes from '../../routes/index';
 import notifiers from '../../toasts/index';
 
 const LoginPage = () => {
   const auth = useAuthContext();
   const userNameInput = useRef(null);
   const { t } = useTranslation();
-  const { apiRoutes, appRoutes } = routes;
 
   const [authFailed, setAuthFailed] = useState(false);
   const location = useLocation();
@@ -29,10 +28,10 @@ const LoginPage = () => {
     onSubmit: async (values) => {
       setAuthFailed(false);
       try {
-        const res = await axios.post(apiRoutes.loginPath(), values);
+        const res = await axios.post(routes.api.loginRoute(), values);
         auth.logIn(res.data);
 
-        const { from } = location.state || { from: { pathname: appRoutes.main } };
+        const { from } = location.state || { from: { pathname: routes.app.mainRoute() } };
         navigate(from);
 
         notifiers.loggedIn(t);
@@ -119,7 +118,7 @@ const LoginPage = () => {
             {' '}
             <span>{t('elements.noAccount')}</span>
             {' '}
-            <a href={appRoutes.signup}>{t('elements.signup')}</a>
+            <a href={routes.app.signupRoute()}>{t('elements.signup')}</a>
           </div>
         </Card.Footer>
       </Card>

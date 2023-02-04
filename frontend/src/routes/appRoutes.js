@@ -1,6 +1,6 @@
 export default {
-  login: '/login',
-  main: '/',
-  signup: '/signup',
-  default: '*',
+  loginRoute: () => '/login',
+  mainRoute: () => '/',
+  signupRoute: () => '/signup',
+  defaultRoute: () => '*',
 };

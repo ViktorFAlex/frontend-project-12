@@ -10,11 +10,10 @@ import * as Yup from 'yup';
 import PageTemplate from '../common-components/PageTemplate';
 import img from '../../assets/signup.jpg';
 import useAuthContext from '../../hooks/useAuthContext';
-import routes from '../../routes/routes';
+import routes from '../../routes/index';
 import notifiers from '../../toasts/index';
 
 const SignupPage = () => {
-  const { apiRoutes, appRoutes } = routes;
   const auth = useAuthContext();
   const { t } = useTranslation();
 
@@ -43,10 +42,10 @@ const SignupPage = () => {
     }),
     onSubmit: async (values) => {
       try {
-        const res = await axios.post(apiRoutes.signupPath(), values);
+        const res = await axios.post(routes.api.signupRoute(), values);
         auth.logIn(res.data);
 
-        const { from } = location.state || { from: { pathname: appRoutes.main } };
+        const { from } = location.state || { from: { pathname: routes.app.mainRoute() } };
         navigate(from);
 
         notifiers.loggedIn(t);
@@ -173,7 +172,7 @@ const SignupPage = () => {
             {' '}
             <span>{t('elements.signedUp')}</span>
             {' '}
-            <a href={appRoutes.main}>{t('elements.toLogin')}</a>
+            <a href={routes.app.mainRoute()}>{t('elements.toLogin')}</a>
           </div>
         </Card.Footer>
       </Card>

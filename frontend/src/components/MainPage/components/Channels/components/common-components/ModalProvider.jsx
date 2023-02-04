@@ -10,7 +10,7 @@ const ModalProvider = ({ children }) => {
   const modalHandlers = useMemo(() => ({
     show, handleHide, handleShow,
   }), [show]);
-  console.log(show);
+
   return (
     <ModalContext.Provider value={modalHandlers}>
       {children}

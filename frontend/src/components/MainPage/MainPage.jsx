@@ -11,7 +11,7 @@ const MainPage = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const auth = useAuthContext();
-
+  console.log('hey');
   useEffect(() => {
     const headers = auth.getAuthHeaders();
 

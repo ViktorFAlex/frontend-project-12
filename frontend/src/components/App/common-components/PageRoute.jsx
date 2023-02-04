@@ -1,21 +1,20 @@
 import { useLocation, Navigate } from 'react-router-dom';
 import useAuthContext from '../../../hooks/useAuthContext';
-import routes from '../../../routes/routes.js';
+import routes from '../../../routes/index.js';
 
 const PageRoute = ({ children, route }) => {
   const auth = useAuthContext();
   const location = useLocation();
-  const { appRoutes } = routes;
-
+  console.log(routes, children);
   switch (route) {
-    case (appRoutes.main):
+    case (routes.app.mainRoute()):
       return (auth.loginStatus.username
         ? children
-        : <Navigate to={appRoutes.login} state={{ from: location }} />);
-    case (appRoutes.login):
-    case (appRoutes.signup):
+        : <Navigate to={routes.app.loginRoute()} state={{ from: location }} />);
+    case (routes.app.loginRoute()):
+    case (routes.app.signupRoute()):
       return (auth.loginStatus.username
-        ? <Navigate to={appRoutes.main} state={{ from: location }} />
+        ? <Navigate to={routes.app.mainRoute()} state={{ from: location }} />
         : children);
     default:
       throw new Error(`Unexpected route: ${route}`);

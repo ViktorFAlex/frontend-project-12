@@ -1,9 +1,8 @@
 import { useTranslation } from 'react-i18next';
 import img from '../../assets/notfound.svg';
-import routes from '../../routes/routes';
+import routes from '../../routes/index';
 
 const WrongPage = () => {
-  const { appRoutes } = routes;
   const { t } = useTranslation();
 
   return (
@@ -13,7 +12,7 @@ const WrongPage = () => {
       <p className="text-muted">
         {t('elements.youCanNavigate')}
         {' '}
-        <a href={appRoutes.main}>{t('elements.toMainPage')}</a>
+        <a href={routes.app.mainRoute()}>{t('elements.toMainPage')}</a>
       </p>
     </div>
   );
