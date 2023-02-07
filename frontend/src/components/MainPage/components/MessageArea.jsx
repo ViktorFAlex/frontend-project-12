@@ -14,7 +14,8 @@ const MessageArea = () => {
   const { t } = useTranslation();
   const auth = useAuthContext();
   const chatApi = useChatApiContext();
-  const author = auth.loginStatus.user;
+  const author = auth.loginStatus.username;
+
   const inputRef = useRef(null);
   useEffect(() => {
     inputRef.current.focus();
@@ -28,7 +29,8 @@ const MessageArea = () => {
     },
     validationSchema: Yup.object().shape({
       message: Yup.string()
-        .required(),
+        .required()
+        .matches(/\S+/),
     }),
     onSubmit: async ({ message }) => {
       try {
