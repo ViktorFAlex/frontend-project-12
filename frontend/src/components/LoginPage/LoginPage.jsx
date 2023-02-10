@@ -33,8 +33,6 @@ const LoginPage = () => {
 
         const { from } = location.state || { from: { pathname: routes.app.mainRoute() } };
         navigate(from);
-
-        notifiers.loggedIn(t);
       } catch (error) {
         if (error.isAxiosError && error?.response?.status === 401) {
           setAuthFailed(true);

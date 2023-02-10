@@ -9,11 +9,13 @@ import * as Yup from 'yup';
 import selectors from '../../../slices/selectors';
 import { useChatApiContext, useModalContext } from '../../../hooks/index';
 import filter from '../../../assets/profanityFilter';
+import notifiers from '../../../toasts/index';
 
 const Rename = () => {
   const { t } = useTranslation();
   const chatApi = useChatApiContext();
   const { handleHide } = useModalContext();
+  const handleResponse = () => notifiers.renameChannel(t);
 
   const inputRef = useRef(null);
 
@@ -37,7 +39,7 @@ const Rename = () => {
     onSubmit: async ({ name }) => {
       try {
         const cleanName = filter.clean(name); // can send two equal dirty words;
-        await chatApi.renameChannel({ id, name: cleanName }, t);
+        await chatApi.renameChannel({ id, name: cleanName }, handleResponse);
         handleHide();
       } catch (e) {
         console.error(e.message);

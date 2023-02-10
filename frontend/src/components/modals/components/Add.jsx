@@ -3,22 +3,31 @@ import { useRef, useEffect } from 'react';
 import {
   Modal, FormGroup, FormControl, Button, Form,
 } from 'react-bootstrap';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
+import filter from 'leo-profanity';
 import selectors from '../../../slices/selectors';
 import { useChatApiContext, useModalContext } from '../../../hooks/index';
-import filter from '../../../assets/profanityFilter';
+import { actions as channelsActions } from '../../../slices/channelsSlice';
+import notifiers from '../../../toasts/index';
 
 const Add = () => {
   const { t } = useTranslation();
   const chatApi = useChatApiContext();
+  const dispatch = useDispatch();
   const { handleHide } = useModalContext();
 
   const inputRef = useRef();
   useEffect(() => {
     inputRef.current.focus();
   });
+
+  const handleResponse = (data) => {
+    dispatch(channelsActions.addChannel(data));
+    dispatch(channelsActions.setActiveChannel(data.id));
+    notifiers.addChannel(t);
+  };
 
   const channelNames = useSelector(selectors.selectChannelsByNames);
   const formik = useFormik({
@@ -36,7 +45,7 @@ const Add = () => {
     onSubmit: async ({ name }) => {
       try {
         const cleanName = filter.clean(name); // can send two equal dirty words;
-        await chatApi.addChannel({ name: cleanName }, t);
+        await chatApi.addChannel({ name: cleanName }, handleResponse);
         handleHide();
       } catch (e) {
         console.error(e.message);
@@ -61,22 +70,16 @@ const Add = () => {
               value={formik.values.name}
               isInvalid={formik.touched.name && formik.errors.name}
             />
-            <Form.Label visuallyHidden htmlFor="name">{t('channels.name')}</Form.Label>
+            <Form.Label visuallyHidden htmlFor="name">
+              {t('channels.name')}
+            </Form.Label>
             <Form.Control.Feedback type="invalid">{t(formik.errors.name)}</Form.Control.Feedback>
           </FormGroup>
           <div className="d-flex justify-content-end">
-            <Button
-              type="button"
-              variant="secondary"
-              className="me-2"
-              onClick={handleHide}
-            >
+            <Button type="button" variant="secondary" className="me-2" onClick={handleHide}>
               {t('elements.cancel')}
             </Button>
-            <Button
-              type="submit"
-              variant="primary"
-            >
+            <Button type="submit" variant="primary">
               {t('elements.send')}
             </Button>
           </div>

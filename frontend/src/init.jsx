@@ -4,6 +4,7 @@ import i18next from 'i18next';
 import { I18nextProvider, initReactI18next } from 'react-i18next';
 import { Provider } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
+import filter from 'leo-profanity';
 import 'react-toastify/dist/ReactToastify.css';
 import resources from './locales/index.js';
 import store from './slices/index.js';
@@ -23,7 +24,10 @@ const init = async (socket) => {
       fallbackLng: 'ru',
     });
 
-  const chatApi = buildChatApi(socket, i18n);
+  filter.clearList();
+  filter.add(filter.getDictionary('ru'));
+
+  const chatApi = buildChatApi(socket);
 
   const rollbarConfig = {
     accessToken: process.env.REACT_APP_NOT_SECRET_CODE,

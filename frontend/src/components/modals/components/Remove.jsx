@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import selectors from '../../../slices/selectors';
 import { useChatApiContext, useModalContext } from '../../../hooks/index';
+import notifiers from '../../../toasts/index';
 
 const Remove = () => {
   const { t } = useTranslation();
@@ -10,10 +11,11 @@ const Remove = () => {
 
   const { modalItem } = useSelector(selectors.selectModalInfo);
   const { handleHide } = useModalContext();
+  const handleResponse = () => notifiers.removeChannel(t);
 
   const handleRemove = async () => {
     try {
-      await chatApi.removeChannel({ id: modalItem }, t);
+      await chatApi.removeChannel({ id: modalItem }, handleResponse);
       handleHide();
     } catch (e) {
       console.error(e.message);

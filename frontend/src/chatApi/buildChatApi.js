@@ -1,9 +1,8 @@
 import store from '../slices/index.js';
-import notifiers from '../toasts/index';
 import { actions as channelsActions } from '../slices/channelsSlice';
 import { actions as messagesActions } from '../slices/messagesSlice';
 
-const buildChatApi = (socket, i18n) => {
+const buildChatApi = (socket) => {
   const socketTimeout = 4000;
 
   socket.on('newChannel', (data) => {
@@ -17,18 +16,15 @@ const buildChatApi = (socket, i18n) => {
     })
     .on('newMessage', (message) => {
       store.dispatch(messagesActions.addMessage(message));
-    })
-    .on('disconnect', () => {
-      notifiers.error(i18n.t, 'networkError');
     });
 
-  const socketPromise = (action, cb = null) => (data, t) => new Promise((resolve, reject) => {
+  const socketPromise = (action, cb) => (data, handler) => new Promise((resolve, reject) => {
     socket.timeout(socketTimeout).emit(action, data, (error, response) => {
       if (error) {
         reject(error);
       } else {
         if (cb) {
-          cb(t, response);
+          cb(handler, response);
         }
         resolve(response);
       }
@@ -37,13 +33,11 @@ const buildChatApi = (socket, i18n) => {
 
   return {
     addMessage: socketPromise('newMessage'),
-    addChannel: socketPromise('newChannel', (t, { data }) => {
-      store.dispatch(channelsActions.addChannel(data));
-      store.dispatch(channelsActions.setActiveChannel(data.id));
-      notifiers.addChannel(t);
+    addChannel: socketPromise('newChannel', (handler, { data }) => {
+      handler(data);
     }),
-    removeChannel: socketPromise('removeChannel', (t) => notifiers.removeChannel(t)),
-    renameChannel: socketPromise('renameChannel', (t) => notifiers.renameChannel(t)),
+    removeChannel: socketPromise('removeChannel', (handler) => handler()),
+    renameChannel: socketPromise('renameChannel', (handler) => handler()),
   };
 };
 
