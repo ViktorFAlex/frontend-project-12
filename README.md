@@ -1,7 +1,7 @@
 ### Hexlet tests and linter status:
 [![Actions Status](https://github.com/ViktorFAlex/frontend-project-12/workflows/hexlet-check/badge.svg)](https://github.com/ViktorFAlex/frontend-project-12/actions)
 ### Deployment link:
-[Railway](https://frontend-project-12-production-5b59.up.railway.app/)
+[Railway](https://frontend-project-12-production-5b59.up.railway.app/) May not be available on last days of month!
 ## Hexlet Chat.
 Simplified version of online-messenger where you can communicate with your friends!
 This repo contains frontend-part of this project.
