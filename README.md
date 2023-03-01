@@ -7,7 +7,7 @@ Simplified version of online-messenger where you can communicate with your frien
 This repo contains frontend-part of this project.
 
 You can find backend-documentation here: 
-[link](https://github.com/hexlet-components/project-js-chat-backend)
+[Link](https://github.com/hexlet-components/project-js-chat-backend)
 
 #### To make project run in developing environment:
 1) Setup:
