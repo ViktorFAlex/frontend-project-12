@@ -6,6 +6,9 @@
 
 ### Deployment link:
 [Railway](https://frontend-project-12-production-5b59.up.railway.app/)
+
+Due to restrictions of the free plan, project can be unavailable on last days of month!
+
 Test data:
 login: admin
 password: admin
