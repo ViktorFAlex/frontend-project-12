@@ -6,6 +6,8 @@
 
 ### Deployment link:
 [Railway](https://hexletchatproject.up.railway.app/)  
+Due to restrictions of free plan, can be unavailable on last days of month!  
+***
 Test data:  
 login: admin  
 password: admin
