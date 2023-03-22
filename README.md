@@ -5,7 +5,7 @@
 <img src="https://github.com/ViktorFAlex/projects-previews/blob/main/chat.gif" width="800" height="450">
 
 ### Deployment link:
-[Railway](https://frontend-project-12-production-5b59.up.railway.app/)
+[Railway](https://hexletchatproject.up.railway.app/
 
 Due to restrictions of the free plan, project can be unavailable on last days of month!
 
