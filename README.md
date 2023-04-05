@@ -5,7 +5,7 @@
 <img src="https://github.com/ViktorFAlex/projects-previews/blob/main/chat.gif" width="800" height="450">  
 
 ### Deployment link:
-[Render](https://hexlet-chat-en89.onrender.com)
+[Render.io](https://hexlet-chat-en89.onrender.com)
 ## Hexlet Chat.
 Simplified version of online-messenger where you can communicate with your friends!
 This repo contains frontend-part of this project.
