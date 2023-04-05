@@ -1,19 +1,13 @@
-### Preview:
-<img src="https://github.com/ViktorFAlex/projects-previews/blob/main/chat.gif" width="800" height="450">
-
+### Hexlet tests and linter status:
+[![Actions Status](https://github.com/ViktorFAlex/frontend-project-12/workflows/hexlet-check/badge.svg)](https://github.com/ViktorFAlex/frontend-project-12/actions)
 ### Deployment link:
-[Railway](https://hexletchatproject.up.railway.app/)
-***
-Test data:  
-login: admin  
-password: admin
-
+[Railway](https://frontend-project-12-production-5b59.up.railway.app/)
 ## Hexlet Chat.
 Simplified version of online-messenger where you can communicate with your friends!
 This repo contains frontend-part of this project.
 
 You can find backend-documentation here: 
-[Link](https://github.com/hexlet-components/project-js-chat-backend)
+[link](https://github.com/hexlet-components/project-js-chat-backend)
 
 #### To make project run in developing environment:
 1) Setup:
