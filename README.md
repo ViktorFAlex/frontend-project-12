@@ -5,8 +5,7 @@
 <img src="https://github.com/ViktorFAlex/projects-previews/blob/main/chat.gif" width="800" height="450">
 
 ### Deployment link:
-[Railway](https://hexletchatproject.up.railway.app/)  
-Due to restrictions of free plan, can be unavailable on last days of month!  
+[Railway](https://hexletchatproject.up.railway.app/)
 ***
 Test data:  
 login: admin  
